@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>月清排序工具</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 15px;
+            display: flex;
+            flex-direction: row;
+            background-color: cadetblue;
+            height: 88%;
+            text-align: center;
+            margin-top: 10px;
+        }
+        textarea {
+            flex: 1
+        }
+        .btn-sort {
+            height: 30px;
+            margin: 0 0 10px 0;
+            width: 140px;
+        }
+        .splitor {
+            display: flex;
+            flex-direction: column;
+            margin: 10px 20px;
+            align-items: center;
+        }
+        span {
+            color: white;
+            font-size: 14px;
+        }
+        h1 {
+            margin: 10px auto;
+            text-align: center;
+        }
+
+    </style>
+    <script>
+        function sort() {
+            var before = document.getElementById('before').value
+            var splitor = document.getElementById('splitor').value
+            let array = before.split('\n')
+            let array1 = []
+            array.forEach((item, index) => {
+                if (item.substring(item.indexOf(splitor) + 1).length > 0) {
+                    let str = `${index + 1}${splitor}${item.substring(item.indexOf(splitor) + 1)}\n`
+                    array1.push(str)
+                }
+            })
+            let str = array1.reduce((val, newVal) => {
+                return val + newVal
+            } )
+
+            // if (str.length > 3800) {
+                document.getElementById('overflow-tips').innerText = `当前字数：${str.length}字`
+            // }
+
+            document.getElementById('after').value = str
+        }
+
+    </script>
+</head>
+<body>
+    <h1>月清排序工具</h1>
+    <div class="container">
+        <textarea id="before"></textarea>
+        <div class="splitor">
+            <span>该处输入每行序号与内容之间的分隔符</span>
+            <input type="text" id="splitor" placeholder="请输入序号分隔符" class="single-input" value="." style="margin: 10px 0; width: 200px;" />
+            <input type="button" value="转换" class="btn-sort" onclick="sort()" />
+            <span id="overflow-tips"></span>
+        </div>
+        <textarea id="after"></textarea>
+    </div>
+</body>
+</html>
